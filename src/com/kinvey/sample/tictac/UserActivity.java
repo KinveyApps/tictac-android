@@ -27,8 +27,6 @@ public class UserActivity extends SherlockFragmentActivity implements ActionBar.
 		// layout inflation.
 		setUpTabs();
 
-		
-
 	}
 
 	// on pause force-dismisses dialogs to avoid window leaks.
@@ -37,8 +35,6 @@ public class UserActivity extends SherlockFragmentActivity implements ActionBar.
 		super.onPause();
 	}
 
-	
-	
 	
 	public void setUpTabs() {
 

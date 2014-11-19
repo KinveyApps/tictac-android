@@ -33,8 +33,9 @@ public class EndGameDialog extends SherlockDialogFragment {
 		void onNew();
 
 	}
-	
-	public EndGameDialog(){}
+
+	public EndGameDialog() {
+	}
 
 	public EndGameDialog(WINNER winner, SherlockFragmentActivity act) {
 		this.winner = winner;
@@ -51,10 +52,8 @@ public class EndGameDialog extends SherlockDialogFragment {
 
 	}
 
-
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_endgame, container);
 		mEditText = (TextView) view.findViewById(R.id.endgame_result);
 		newGame = (Button) view.findViewById(R.id.button_new);

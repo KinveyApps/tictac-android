@@ -31,8 +31,7 @@ public class LoginFragment extends SherlockFragment implements OnClickListener {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup group,
-			Bundle saved) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup group, Bundle saved) {
 		View v = inflater.inflate(R.layout.fragment_login, group, false);
 		bindViews(v);
 		return v;
@@ -43,9 +42,6 @@ public class LoginFragment extends SherlockFragment implements OnClickListener {
 		password = (EditText) v.findViewById(R.id.login_password);
 		login = (Button) v.findViewById(R.id.login_button);
 		login.setOnClickListener(this);
-
-	
-
 	}
 
 	@Override
@@ -55,7 +51,6 @@ public class LoginFragment extends SherlockFragment implements OnClickListener {
 	}
 
 	public void populateViews() {
-
 	}
 
 	@Override
@@ -72,30 +67,26 @@ public class LoginFragment extends SherlockFragment implements OnClickListener {
 		String user = username.getText().toString();
 		String pass = password.getText().toString();
 
-		TicTac.getClient(getSherlockActivity()).user()
-				.login(user, pass, new KinveyUserCallback() {
+		TicTac.getClient(getSherlockActivity()).user().login(user, pass, new KinveyUserCallback() {
 
-					@Override
-					public void onSuccess(User arg0) {
-						Log.i(TicTac.TAG, "Logged in as: " + TicTac.getClient(getSherlockActivity()).user().getUsername());
-						Log.i(TicTac.TAG, "Logged in as: " +arg0.getUsername());
+			@Override
+			public void onSuccess(User arg0) {
+				Log.i(TicTac.TAG, "Logged in as: " + TicTac.getClient(getSherlockActivity()).user().getUsername());
 
-						Intent extras = new Intent();
-						extras.putExtra("username", arg0.getUsername());
-						
-						LoginFragment.this.getSherlockActivity().setResult(2, extras);
-						LoginFragment.this.getSherlockActivity().finish();
+				Intent extras = new Intent();
+				extras.putExtra("username", arg0.getUsername());
 
-					}
+				LoginFragment.this.getSherlockActivity().setResult(2, extras);
+				LoginFragment.this.getSherlockActivity().finish();
 
-					@Override
-					public void onFailure(Throwable arg0) {
-						Toast.makeText(getSherlockActivity(),
-								"Error logging in: " + arg0.getMessage(),
-								Toast.LENGTH_SHORT).show();
+			}
 
-					}
-				});
+			@Override
+			public void onFailure(Throwable arg0) {
+				Toast.makeText(getSherlockActivity(), "Error logging in: " + arg0.getMessage(), Toast.LENGTH_SHORT).show();
+
+			}
+		});
 
 	}
 

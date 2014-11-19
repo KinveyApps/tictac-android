@@ -46,10 +46,8 @@ public class GameFragment extends SherlockFragment implements OnTouchListener {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup group,
-			Bundle saved) {
-		View v = (LinearLayout) inflater.inflate(R.layout.fragment_tic_tac,
-				group, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup group, Bundle saved) {
+		View v = (LinearLayout) inflater.inflate(R.layout.fragment_tic_tac, group, false);
 		gameState = new CellView[n][n];
 		bindViews(v);
 		newGame();
@@ -62,10 +60,8 @@ public class GameFragment extends SherlockFragment implements OnTouchListener {
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
 
-				int id = getResources().getIdentifier("tictac_box" + i + j,
-						"id", getSherlockActivity().getPackageName());
-				Log.i(TicTac.TAG, "loading view: " + "tictac_box" + i + j
-						+ " and " + (v == null));
+				int id = getResources().getIdentifier("tictac_box" + i + j, "id", getSherlockActivity().getPackageName());
+				Log.i(TicTac.TAG, "loading view: " + "tictac_box" + i + j + " and " + (v == null));
 
 				gameState[i][j] = (CellView) v.findViewById(id);
 				gameState[i][j].setTouchListenDelegate(this);
@@ -113,8 +109,7 @@ public class GameFragment extends SherlockFragment implements OnTouchListener {
 
 			}
 		}
-		int[] sums = combineArrays(sumsDiag,
-				combineArrays(sumsHorizontal, sumsVertical));
+		int[] sums = combineArrays(sumsDiag, combineArrays(sumsHorizontal, sumsVertical));
 
 		for (int i = 0; i < sums.length; i++) {
 			if (sums[i] == n) {
@@ -146,8 +141,7 @@ public class GameFragment extends SherlockFragment implements OnTouchListener {
 			@Override
 			public void onQuit() {
 				endGameFragment.dismiss();
-				FragmentTransaction ft = getSherlockActivity()
-						.getSupportFragmentManager().beginTransaction();
+				FragmentTransaction ft = getSherlockActivity().getSupportFragmentManager().beginTransaction();
 				ft.replace(android.R.id.content, new MenuFragment());
 				ft.commit();
 
@@ -174,8 +168,7 @@ public class GameFragment extends SherlockFragment implements OnTouchListener {
 
 			x = rand.nextInt(openPoints.size());
 
-			gameState[openPoints.get(x).x][openPoints.get(x).y]
-					.setState(CellState.O);
+			gameState[openPoints.get(x).x][openPoints.get(x).y].setState(CellState.O);
 		}
 
 	}
@@ -209,8 +202,7 @@ public class GameFragment extends SherlockFragment implements OnTouchListener {
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(
-			com.actionbarsherlock.view.MenuItem item) {
+	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_item_newgame:
 			newGame();
@@ -231,17 +223,17 @@ public class GameFragment extends SherlockFragment implements OnTouchListener {
 		return openPoints;
 	}
 
-    public enum WINNER {
-        PLAYER("You won!"), COMPUTER("You lost!"), STALEMATE("It's a tie!");
-        private String display;
+	public enum WINNER {
+		PLAYER("You won!"), COMPUTER("You lost!"), STALEMATE("It's a tie!");
+		private String display;
 
-        WINNER(String display) {
-            this.display = display;
-        }
+		WINNER(String display) {
+			this.display = display;
+		}
 
-        public String getDisplay() {
-            return this.display;
-        }
-    }
+		public String getDisplay() {
+			return this.display;
+		}
+	}
 
 }

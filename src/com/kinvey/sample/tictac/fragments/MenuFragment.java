@@ -27,8 +27,7 @@ import com.kinvey.sample.tictac.R;
 import com.kinvey.sample.tictac.TicTac;
 import com.kinvey.sample.tictac.component.LeaderAdapter;
 
-public class MenuFragment extends SherlockFragment implements OnClickListener,
-		GravatarCallback {
+public class MenuFragment extends SherlockFragment implements OnClickListener, GravatarCallback {
 
 	private TableLayout leaderBoard;
 
@@ -51,7 +50,6 @@ public class MenuFragment extends SherlockFragment implements OnClickListener,
 		}
 		populateViews();
 
-
 	}
 
 	private void populateViews() {
@@ -61,33 +59,28 @@ public class MenuFragment extends SherlockFragment implements OnClickListener,
 		top.setLimit(5);
 		leaders.clear();
 
+		TicTac.getClient(getSherlockActivity()).appData(TicTac.Collection, GameEntity.class).get(top, new KinveyListCallback<GameEntity>() {
 
-		TicTac.getClient(getSherlockActivity())
-				.appData(TicTac.Collection, GameEntity.class)
-				.get(top, new KinveyListCallback<GameEntity>() {
+			@Override
+			public void onSuccess(GameEntity[] arg0) {
+				for (int i = 0; i < arg0.length; i++) {
 
-					@Override
-					public void onSuccess(GameEntity[] arg0) {
-						for (int i = 0; i < arg0.length; i++) {
+					arg0[i].setPlayerName(arg0[i].getPlayerName());
+					arg0[i].setCallback(MenuFragment.this);
+					leaders.add(arg0[i]);
 
-							arg0[i].setPlayerName(arg0[i].getPlayerName());
-							arg0[i].setCallback(MenuFragment.this);
-							leaders.add(arg0[i]);
+				}
+				Log.i(TicTac.TAG, "leaderboard has: " + leaders.size());
+				updateBoard();
 
-						}
-						Log.i(TicTac.TAG, "leaderboard has: " + leaders.size());
-						updateBoard();
+			}
 
-					}
+			@Override
+			public void onFailure(Throwable arg0) {
+				Toast.makeText(getSherlockActivity(), "something went wrong -> " + arg0.getMessage(), Toast.LENGTH_SHORT).show();
 
-					@Override
-					public void onFailure(Throwable arg0) {
-						Toast.makeText(getSherlockActivity(),
-								"something went wrong -> " + arg0.getMessage(),
-								Toast.LENGTH_SHORT).show();
-
-					}
-				});
+			}
+		});
 
 	}
 
@@ -97,15 +90,13 @@ public class MenuFragment extends SherlockFragment implements OnClickListener,
 			return;
 		}
 
-		leaderList.setAdapter(new LeaderAdapter(getSherlockActivity(), leaders,
-				(LayoutInflater) getSherlockActivity().getSystemService(
-						Activity.LAYOUT_INFLATER_SERVICE)));
+		leaderList.setAdapter(new LeaderAdapter(getSherlockActivity(), leaders, (LayoutInflater) getSherlockActivity().getSystemService(
+				Activity.LAYOUT_INFLATER_SERVICE)));
 
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup group,
-			Bundle saved) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup group, Bundle saved) {
 		View v = inflater.inflate(R.layout.fragment_menu, group, false);
 		bindViews(v);
 		return v;
@@ -126,8 +117,7 @@ public class MenuFragment extends SherlockFragment implements OnClickListener,
 	@Override
 	public void onClick(View v) {
 		if (v == newGame) {
-			FragmentTransaction ft = getSherlockActivity()
-					.getSupportFragmentManager().beginTransaction();
+			FragmentTransaction ft = getSherlockActivity().getSupportFragmentManager().beginTransaction();
 			ft.replace(android.R.id.content, new GameFragment());
 			ft.addToBackStack("Game");
 			ft.commit();

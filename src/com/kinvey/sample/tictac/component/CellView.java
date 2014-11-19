@@ -76,9 +76,6 @@ public class CellView extends ImageView implements OnTouchListener {
 				touchListenDelegate.onTouch(v, event);
 				
 			}
-			
-			
-			
 		}
 		return false;
 	}
@@ -90,7 +87,5 @@ public class CellView extends ImageView implements OnTouchListener {
 	public void setTouchListenDelegate(OnTouchListener touchListenDelegate) {
 		this.touchListenDelegate = touchListenDelegate;
 	}
-
-	
 
 }
